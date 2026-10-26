@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Glow & Gain | Clean Girl Weight Gain</title>
+    <meta name="theme-color" content="#FAF7F2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Glow & Gain">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FAF7F2',
+                        cardBg: '#FFFFFF',
+                        softBeige: '#F3EDE2',
+                        accentRose: '#E8D2CB',
+                        roseDark: '#C89B8C',
+                        textDark: '#3A322C',
+                        textMuted: '#8C827A',
+                        sage: '#D2DDD3'
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FAF7F2;
+            color: #3A322C;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(243, 237, 226, 0.8);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="pb-24 pt-4 px-4 max-w-md mx-auto min-h-screen flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="text-center my-4">
+        <span class="text-xs uppercase tracking-widest text-roseDark font-medium">Soft Routine & Nourishing</span>
+        <h1 class="font-serif text-3xl italic text-textDark font-normal mt-1">Glow & Gain</h1>
+        <p class="text-xs text-textMuted mt-1">Nähre deinen Körper voll Achtsamkeit ✨</p>
+    </header>
+
+    <!-- App Views Container -->
+    <main class="flex-1">
+        
+        <!-- Tab 1: Pantry / Vorratskammer & Einkaufsliste -->
+        <section id="tab-pantry" class="space-y-4">
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="font-serif text-xl font-semibold text-textDark">Meine Zutaten</h2>
+                <button onclick="openModal()" class="text-xs bg-accentRose/30 hover:bg-accentRose/50 text-textDark px-3 py-1.5 rounded-full font-medium transition">
+                    + Neue Zutat
+                </button>
+            </div>
+
+            <!-- Categories Filter -->
+            <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-1 text-xs" id="category-filters">
+                <button onclick="filterCategory('all')" class="cat-btn active bg-roseDark text-white px-3 py-1.5 rounded-full whitespace-nowrap">Alle</button>
+                <button onclick="filterCategory('milchig')" class="cat-btn bg-white text-textMuted border border-softBeige px-3 py-1.5 rounded-full whitespace-nowrap">Milchig & Protein</button>
+                <button onclick="filterCategory('fruehstueck')" class="cat-btn bg-white text-textMuted border border-softBeige px-3 py-1.5 rounded-full whitespace-nowrap">Frühstück & Snacks</button>
+                <button onclick="filterCategory('fette')" class="cat-btn bg-white text-textMuted border border-softBeige px-3 py-1.5 rounded-full whitespace-nowrap">Gesunde Fette</button>
+                <button onclick="filterCategory('basics')" class="cat-btn bg-white text-textMuted border border-softBeige px-3 py-1.5 rounded-full whitespace-nowrap">Sättigende Basics</button>
+                <button onclick="filterCategory('shakes')" class="cat-btn bg-white text-textMuted border border-softBeige px-3 py-1.5 rounded-full whitespace-nowrap">Shakes & Drinks</button>
+            </div>
+
+            <!-- Items List -->
+            <div id="pantry-list" class="space-y-2">
+                <!-- Dynamisch befüllt -->
+            </div>
+        </section>
+
+        <!-- Tab 2: Tagesplaner (Morgen zubereiten) -->
+        <section id="tab-planner" class="space-y-4 hidden">
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="font-serif text-xl font-semibold text-textDark">Tagesplaner (Morgen)</h2>
+                <span class="text-xs text-textMuted">Kalorienreich & Leicht</span>
+            </div>
+
+            <div class="bg-cardBg p-4 rounded-2xl border border-softBeige space-y-3">
+                <h3 class="text-sm font-medium text-roseDark">⚡ High-Calorie Shake Planer</h3>
+                <div class="text-xs text-textMuted space-y-1">
+                    <p class="flex items-center gap-1.5"><span>🥛</span> 300ml Vollmilch / Haferdrink</p>
+                    <p class="flex items-center gap-1.5"><span>🥜</span> 2 EL Erdnussbutter (ca. 200 kcal)</p>
+                    <p class="flex items-center gap-1.5"><span>🍌</span> 1 Banane + 50g Haferflocken</p>
+                    <p class="flex items-center gap-1.5"><span>🌴</span> 2 Datteln für Süße</p>
+                </div>
+            </div>
+
+            <div class="space-y-2" id="planner-list">
+                <h3 class="text-xs font-semibold text-textMuted uppercase tracking-wider">Für Morgen eingeplant:</h3>
+                <!-- Planned Items -->
+                <div id="planned-items-container" class="space-y-2">
+                    <!-- Dynamisch befüllt -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 3: Settings & Backup -->
+        <section id="tab-settings" class="space-y-4 hidden">
+            <h2 class="font-serif text-xl font-semibold text-textDark">Einstellungen & Backup</h2>
+            
+            <div class="bg-cardBg p-4 rounded-2xl border border-softBeige space-y-3 text-xs">
+                <h3 class="font-semibold text-textDark text-sm">Daten Exportieren / Importieren</h3>
+                <p class="text-textMuted">Deine Daten werden lokal auf deinem Handy gespeichert. Du kannst sie sichern oder auf ein anderes Gerät übertragen.</p>
+                
+                <div class="flex gap-2 pt-2">
+                    <button onclick="exportData()" class="flex-1 bg-softBeige hover:bg-accentRose/40 text-textDark py-2 rounded-xl font-medium transition text-center">
+                        📥 Export JSON
+                    </button>
+                    <label class="flex-1 bg-softBeige hover:bg-accentRose/40 text-textDark py-2 rounded-xl font-medium transition text-center cursor-pointer">
+                        📤 Import JSON
+                        <input type="file" id="import-file" accept=".json" onchange="importData(event)" class="hidden">
+                    </label>
+                </div>
+            </div>
+
+            <div class="bg-cardBg p-4 rounded-2xl border border-softBeige space-y-2 text-xs text-textMuted">
+                <h3 class="font-semibold text-textDark text-sm">🌱 Mindset Reminders</h3>
+                <p>• Consistency over perfection.</p>
+                <p>• You don't need everything every day.</p>
+                <p>• Kleine Schritte bringen dich nachhaltig ans Ziel.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar (iOS Style) -->
+    <nav class="fixed bottom-4 left-4 right-4 max-w-md mx-auto glass-card rounded-3xl p-2 flex justify-around items-center shadow-lg border border-white/60">
+        <button onclick="switchTab('pantry')" id="nav-pantry" class="flex flex-col items-center gap-0.5 text-roseDark">
+            <span class="text-lg">🛒</span>
+            <span class="text-[10px] font-medium">Vorrätig</span>
+        </button>
+        <button onclick="switchTab('planner')" id="nav-planner" class="flex flex-col items-center gap-0.5 text-textMuted">
+            <span class="text-lg">✨</span>
+            <span class="text-[10px] font-medium">Tagesplan</span>
+        </button>
+        <button onclick="switchTab('settings')" id="nav-settings" class="flex flex-col items-center gap-0.5 text-textMuted">
+            <span class="text-lg">⚙️</span>
+            <span class="text-[10px] font-medium">Backup</span>
+        </button>
+    </nav>
+
+    <!-- Modal Zutat hinzufügen -->
+    <div id="modal" class="fixed inset-0 bg-black/30 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-5 w-full max-w-sm space-y-4 shadow-xl">
+            <h3 class="font-serif text-lg font-semibold text-textDark">Neue Zutat hinzufügen</h3>
+            
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-textMuted mb-1">Name</label>
+                    <input type="text" id="input-name" placeholder="z. B. Erdnussbutter" class="w-full bg-cream p-2.5 rounded-xl border border-softBeige focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-textMuted mb-1">Kategorie</label>
+                    <select id="input-category" class="w-full bg-cream p-2.5 rounded-xl border border-softBeige focus:outline-none">
+                        <option value="milchig">Milchiges & Protein</option>
+                        <option value="fruehstueck">Frühstück & Snacks</option>
+                        <option value="fette">Gesunde Fette</option>
+                        <option value="basics">Sättigende Basics</option>
+                        <option value="shakes">Shakes & Drinks</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-textMuted mb-1">Anzahl / Menge</label>
+                    <input type="text" id="input-amount" placeholder="z. B. 1 Glas / 500g" class="w-full bg-cream p-2.5 rounded-xl border border-softBeige focus:outline-none">
+                </div>
+            </div>
+
+            <div class="flex gap-2 pt-2">
+                <button onclick="closeModal()" class="flex-1 bg-softBeige text-textDark py-2 rounded-xl text-xs font-medium">Abbrechen</button>
+                <button onclick="addItem()" class="flex-1 bg-roseDark text-white py-2 rounded-xl text-xs font-medium">Speichern</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Logic & Service Worker Registration -->
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registriert!', reg))
+                    .catch(err => console.log('SW Fehler:', err));
+            });
+        }
+
+        // Standard Zutaten basierend auf dem PDF
+        const defaultItems = [
+            { id: 1, name: 'Vollmilch', category: 'milchig', amount: '1 Liter', checked: true, forTomorrow: true },
+            { id: 2, name: 'Griechischer Joghurt', category: 'milchig', amount: '200g', checked: true, forTomorrow: false },
+            { id: 3, name: 'Eier', category: 'milchig', amount: '6 Stück', checked: true, forTomorrow: true },
+            { id: 4, name: 'Haferflocken', category: 'fruehstueck', amount: '500g', checked: true, forTomorrow: true },
+            { id: 5, name: 'Toastbrot', category: 'fruehstueck', amount: '1 Packung', checked: false, forTomorrow: false },
+            { id: 6, name: 'Bananen', category: 'fruehstueck', amount: '1 Stauden', checked: true, forTomorrow: true },
+            { id: 7, name: 'Datteln', category: 'fruehstueck', amount: '200g', checked: true, forTomorrow: true },
+            { id: 8, name: 'Nüsse / Mandeln', category: 'fruehstueck', amount: '150g', checked: true, forTomorrow: false },
+            { id: 9, name: 'Erdnussbutter', category: 'fruehstueck', amount: '1 Glas', checked: true, forTomorrow: true },
+            { id: 10, name: 'Olivenöl', category: 'fette', amount: '1 Flasche', checked: true, forTomorrow: false },
+            { id: 11, name: 'Avocado', category: 'fette', amount: '2 Stück', checked: false, forTomorrow: false },
+            { id: 12, name: 'Nudeln / Reis / Kartoffeln', category: 'basics', amount: 'Vorrat', checked: true, forTomorrow: true },
+            { id: 13, name: 'Vitaminsaft', category: 'shakes', amount: '1 L', checked: true, forTomorrow: false },
+        ];
+
+        let items = JSON.parse(localStorage.getItem('glow_gain_items')) || defaultItems;
+        let activeCategory = 'all';
+
+        function saveState() {
+            localStorage.setItem('glow_gain_items', JSON.stringify(items));
+            renderPantry();
+            renderPlanner();
+        }
+
+        function renderPantry() {
+            const container = document.getElementById('pantry-list');
+            container.innerHTML = '';
+
+            const filtered = activeCategory === 'all' 
+                ? items 
+                : items.filter(i => i.category === activeCategory);
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<p class="text-xs text-center text-textMuted py-6">Keine Zutaten in dieser Kategorie.</p>';
+                return;
+            }
+
+            filtered.forEach(item => {
+                const el = document.createElement('div');
+                el.className = `glass-card p-3 rounded-2xl flex items-center justify-between transition ${item.checked ? 'opacity-80' : ''}`;
+                el.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleCheck(${item.id})" class="w-4 h-4 accent-roseDark rounded cursor-pointer">
+                        <div>
+                            <p class="text-xs font-medium text-textDark ${item.checked ? 'line-through text-textMuted' : ''}">${item.name}</p>
+                            <p class="text-[10px] text-textMuted">${item.amount || 'Menge nicht angegeben'}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="toggleTomorrow(${item.id})" class="text-xs px-2 py-1 rounded-full ${item.forTomorrow ? 'bg-sage text-textDark' : 'bg-softBeige text-textMuted'} transition">
+                            ${item.forTomorrow ? '✨ Morgen' : '+ Morgen'}
+                        </button>
+                        <button onclick="deleteItem(${item.id})" class="text-textMuted hover:text-red-400 text-xs px-1">✕</button>
+                    </div>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        function renderPlanner() {
+            const container = document.getElementById('planned-items-container');
+            container.innerHTML = '';
+
+            const planned = items.filter(i => i.forTomorrow);
+
+            if (planned.length === 0) {
+                container.innerHTML = '<p class="text-xs text-textMuted text-center py-4">Noch nichts für morgen markiert. Klicke bei einer Zutat auf "+ Morgen".</p>';
+                return;
+            }
+
+            planned.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'glass-card p-3 rounded-2xl flex items-center justify-between';
+                el.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-roseDark">•</span>
+                        <span class="text-xs font-medium text-textDark">${item.name}</span>
+                        <span class="text-[10px] text-textMuted">(${item.amount})</span>
+                    </div>
+                    <button onclick="toggleTomorrow(${item.id})" class="text-[10px] text-textMuted underline">Entfernen</button>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        function toggleCheck(id) {
+            items = items.map(i => i.id === id ? { ...i, checked: !i.checked } : i);
+            saveState();
+        }
+
+        function toggleTomorrow(id) {
+            items = items.map(i => i.id === id ? { ...i, forTomorrow: !i.forTomorrow } : i);
+            saveState();
+        }
+
+        function deleteItem(id) {
+            items = items.filter(i => i.id !== id);
+            saveState();
+        }
+
+        function filterCategory(cat) {
+            activeCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('bg-roseDark', 'text-white');
+                btn.classList.add('bg-white', 'text-textMuted');
+            });
+            event.target.classList.remove('bg-white', 'text-textMuted');
+            event.target.classList.add('bg-roseDark', 'text-white');
+            renderPantry();
+        }
+
+        function switchTab(tab) {
+            ['pantry', 'planner', 'settings'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                const navBtn = document.getElementById(`nav-${t}`);
+                navBtn.classList.remove('text-roseDark');
+                navBtn.classList.add('text-textMuted');
+            });
+
+            document.getElementById(`tab-${tab}`).classList.remove('hidden');
+            const activeNav = document.getElementById(`nav-${tab}`);
+            activeNav.classList.remove('text-textMuted');
+            activeNav.classList.add('text-roseDark');
+        }
+
+        function openModal() {
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+
+        function addItem() {
+            const name = document.getElementById('input-name').value;
+            const category = document.getElementById('input-category').value;
+            const amount = document.getElementById('input-amount').value;
+
+            if (!name) return;
+
+            items.push({
+                id: Date.now(),
+                name,
+                category,
+                amount,
+                checked: true,
+                forTomorrow: false
+            });
+
+            document.getElementById('input-name').value = '';
+            document.getElementById('input-amount').value = '';
+            closeModal();
+            saveState();
+        }
+
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(items, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "glow_gain_backup.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedItems = JSON.parse(e.target.result);
+                    if (Array.isArray(importedItems)) {
+                        items = importedItems;
+                        saveState();
+                        alert('Daten erfolgreich importiert!');
+                    }
+                } catch (err) {
+                    alert('Fehler beim Importieren der Datei.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Initial render
+        renderPantry();
+        renderPlanner();
+    </script>
+</body>
+</html>
